@@ -1,0 +1,20 @@
+{
+    "compilerOptions": {
+      "outDir": "lib",
+      "module": "commonjs",
+      "esModuleInterop": true,
+      "target": "es6",
+      "noImplicitAny": true,
+      "moduleResolution": "node",
+      "allowSyntheticDefaultImports": true,
+      "sourceMap": true,
+      "baseUrl": ".",
+      "declaration": true,
+      "plugins": [
+        { "name": "typescript-tslint-plugin" }
+      ]
+    },
+    "include": [
+      "src/**/*.ts"
+    ]
+  }

@@ -1,0 +1,24 @@
+{
+  "name": "tree-sitter-demo",
+  "version": "0.0.1",
+  "main": "index.js",
+  "scripts": {
+		"start": "node ./lib/index.js",
+		"watch": "tsc -b --watch --verbose",
+		"build": "yarn && yarn compile",
+		"compile": "tsc -b tsconfig.json",
+		"tslint": "tslint -c tslint.json -p .",
+		"test": "jest",
+		"clean": "rimraf lib",
+		"lint": "tslint -c ./tslint.json --project .",
+		"pub": "yarn clean && yarn build && yarn publish --access=public"
+	},
+  "dependencies": {
+    "tree-sitter": "^0.15.8",
+    "tree-sitter-java": "^0.13.0",
+    "line-column": "^1.0.2"
+  },
+  "devDependencies": {
+    "@types/node": "12.7.12"
+  }
+}
