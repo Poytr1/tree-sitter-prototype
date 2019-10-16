@@ -1,16 +1,20 @@
 import { SyntaxNode } from "tree-sitter";
+import * as fs from 'fs';
 import { Scope, Symbol, SymbolKind } from "./common";
 
 export class ASTVisitor {
-    public scopeTable: Scope[];
+    private scopeTable: Scope[];
     // private symbols: Symbol[];
     private readonly buffer: String;
+    private readonly filePath: string;
     public currentScope: Scope;
 
-    constructor(buffer: string) {
-        this.scopeTable = [];
+    constructor(filePath: string, scopeTable: Scope[]) {
         // this.symbols = [];
-        this.buffer = buffer;
+        const content = fs.readFileSync(filePath, 'utf8');
+        this.buffer = content;
+        this.scopeTable = scopeTable;
+        this.filePath = filePath;
     }
 
     public visit(node: SyntaxNode) {
@@ -65,13 +69,23 @@ export class ASTVisitor {
                 id: pakageName,
                 defs: [],
                 childrenScope: [],
-                parentScope: null,
-                startOffset: node.startIndex,
-                endOffset: node.parent.endIndex
+                parentScope: undefined,
+                startOffset: undefined,
+                endOffset: undefined
             };
             this.scopeTable.push(scope);
         }
-        this.currentScope = scope;
+        const fileScope: Scope = {
+            id: this.filePath,
+            defs: [],
+            childrenScope: [],
+            parentScope: scope,
+            startOffset: node.startIndex,
+            endOffset: node.parent.endIndex
+        }
+        this.scopeTable.push(fileScope);
+        scope.childrenScope.push(fileScope);
+        this.currentScope = fileScope;
     }
 
     // private visitImportDeclaration(node: SyntaxNode) {

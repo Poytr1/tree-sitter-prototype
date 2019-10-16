@@ -4,9 +4,9 @@ export interface Scope {
         id: string;
         defs: Symbol[];
         childrenScope: Scope[];
-        parentScope: Scope;
-        startOffset: number;
-        endOffset: number;
+        parentScope: Scope | undefined;
+        startOffset: number | undefined;
+        endOffset: number | undefined;
 }
 
 export interface Symbol {
